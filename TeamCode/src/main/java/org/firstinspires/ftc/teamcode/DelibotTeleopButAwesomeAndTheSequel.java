@@ -32,7 +32,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.notstolencode.Devices;
 
 /*
  * This file contains an example of a Linear "OpMode".
@@ -66,22 +69,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class DelibotTeleopButAwesomeAndTheSequel extends LinearOpMode {
 
-    // Declare OpMode members for each of the 4 motors.
+    Devices dev = new Devices(hardwareMap);
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor rightBackDrive = null;
 
     @Override
     public void runOpMode() {
-
-        // Initialize the hardware variables. Note that the strings used here must correspond
-        // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "FLMotor");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "BLMotor");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "FRMotor");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "BRMotor");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -93,10 +85,6 @@ public class DelibotTeleopButAwesomeAndTheSequel extends LinearOpMode {
         // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
         // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
-        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
-        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
@@ -152,10 +140,10 @@ public class DelibotTeleopButAwesomeAndTheSequel extends LinearOpMode {
             */
 
             // Send calculated power to wheels
-            leftFrontDrive.setPower(leftFrontPower);
-            rightFrontDrive.setPower(rightFrontPower);
-            leftBackDrive.setPower(leftBackPower);
-            rightBackDrive.setPower(rightBackPower);
+            dev.FLMotor.setPower(leftFrontPower);
+            dev.FRMotor.setPower(rightFrontPower);
+            dev.BLMotor.setPower(leftBackPower);
+            dev.BRMotor.setPower(rightBackPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
