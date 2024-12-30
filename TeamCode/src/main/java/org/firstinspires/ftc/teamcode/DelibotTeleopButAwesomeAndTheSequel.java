@@ -69,7 +69,6 @@ import org.firstinspires.ftc.teamcode.notstolencode.Devices;
 
 public class DelibotTeleopButAwesomeAndTheSequel extends LinearOpMode {
 
-    Devices dev = new Devices(hardwareMap);
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
@@ -85,6 +84,8 @@ public class DelibotTeleopButAwesomeAndTheSequel extends LinearOpMode {
         // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
         // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
         // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
+
+        Devices dev = new Devices(hardwareMap);
 
         // Wait for the game to start (driver presses START)
         telemetry.addData("Status", "Initialized");
