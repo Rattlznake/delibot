@@ -14,7 +14,7 @@ public class FOD {
     //Resetting IMU
     public void resetOrientation(){dev.imu.resetYaw();}
     //All of the Driving Components
-    public void FODDrive(double y, double x, double rx, double power) {
+    public void FODDrive(double y, double x, double rx, double ry, double power) {
         //Speed multiplier
         x *= 1;
         y *= 1;
@@ -22,6 +22,8 @@ public class FOD {
 
         //Gets the direction the robot is facing (yaw)
         double orientation = dev.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+        rx = FlickStickRXCalc(orientation, rx, ry);
 
         //Math to decide how the robot will move (with its current orientation)
         double fodStrafe = x * Math.cos(-orientation) - y * Math.sin(-orientation);
@@ -39,5 +41,18 @@ public class FOD {
         dev.FRMotor.setPower(FRPower * power);
         dev.BLMotor.setPower(BLPower * power);
         dev.BRMotor.setPower(BRPower * power);
+    }
+    // stolen code ends here, i write this stuff ↓
+    double FlickStickRXCalc(double botOrientation, double joystickX, double joystickY){ // calc is short for calculator if you didn't know
+        double joystickOrientation = Math.atan2(-joystickX,joystickY);
+        double turnPower = 0;
+
+        if (Math.abs(joystickX) > 0.4 || Math.abs(joystickY) > 0.4) {
+            //if (botOrientation - joystickOrientation > 0.02 || botOrientation - joystickOrientation < -0.02) { // if the difference of botOrientation and joystickOrientation is positive, turning value is positive
+                turnPower = 1 * (botOrientation - joystickOrientation);
+            //}
+        }
+
+        return turnPower;
     }
 }
