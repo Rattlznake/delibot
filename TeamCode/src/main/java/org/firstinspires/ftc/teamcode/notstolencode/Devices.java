@@ -6,12 +6,16 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Devices {
     public DcMotorEx FLMotor;
     public DcMotorEx FRMotor;
     public DcMotorEx BLMotor;
     public DcMotorEx BRMotor;
+
+    public DcMotorEx ArmMotor;
+    public Servo ArmServo;
 
     public IMU imu;
 
@@ -20,6 +24,9 @@ public class Devices {
         FRMotor = hardwareMap.get(DcMotorEx.class, "FRMotor");
         BLMotor = hardwareMap.get(DcMotorEx.class, "BLMotor");
         BRMotor = hardwareMap.get(DcMotorEx.class, "BRMotor");
+
+        ArmMotor = hardwareMap.get(DcMotorEx.class, "ArmMotor");
+        ArmServo = hardwareMap.get(Servo.class,"ArmServo");
 
         imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(
@@ -38,5 +45,7 @@ public class Devices {
         FRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BLMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BRMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }
