@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.notstolencode.Arm;
 import org.firstinspires.ftc.teamcode.notstolencode.Devices;
 
 import stolencode.FOD;
@@ -15,6 +16,7 @@ public class DelibotTeleopButFOD extends LinearOpMode {
     @Override public void runOpMode() {
         Devices dev = new Devices(hardwareMap);
         FOD fod = new FOD(dev);
+        Arm arm = new Arm(dev,gamepad1);
         YawPitchRollAngles robotYPR;
         double joystickOrientation;
 
