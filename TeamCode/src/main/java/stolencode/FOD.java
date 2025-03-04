@@ -36,6 +36,8 @@ public class FOD {
         double FRPower = (fodForward - fodStrafe - rx) / denominator;
         double BRPower = (fodForward + fodStrafe - rx) / denominator;
 
+        // THIS IS A CHANGE
+
         //Engage the motors
         dev.FLMotor.setPower(FLPower * power);
         dev.FRMotor.setPower(FRPower * power);
