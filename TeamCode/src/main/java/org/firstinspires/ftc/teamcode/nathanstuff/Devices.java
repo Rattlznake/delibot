@@ -17,6 +17,7 @@ package org.firstinspires.ftc.teamcode.nathanstuff;
         I2C Bus 0 Port 0: imu
  */
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -58,5 +59,12 @@ public class Devices {
         this.brMotor = hardwareMap.get(DcMotor.class, "BRMotor");
 
         this.imu = hardwareMap.get(IMU.class, "imu");
+        imu.initialize(
+             new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                        LogoFacingDirection.UP,
+                        UsbFacingDirection.RIGHT
+                )
+        ))
     }
 }
