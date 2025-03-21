@@ -62,15 +62,16 @@ public class Devices {
         imu.initialize(
              new IMU.Parameters(
                 new RevHubOrientationOnRobot(
-                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                        RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
+                    RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                    RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                 )
              )
         );
 
-        // the following code causes an error if the motors aren't set to a position. oops!
-        //slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        slides.setTargetPosition(0);
+        wormGear.setTargetPosition(0);
+        slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         flMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
