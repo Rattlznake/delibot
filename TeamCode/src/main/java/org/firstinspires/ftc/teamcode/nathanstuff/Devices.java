@@ -30,10 +30,10 @@ public class Devices {
     public DcMotorEx slides;
     public DcMotorEx wormGear;
 
-    public Servo servo1; // figure out what this actually does
-    public Servo servo2; // figure out what this actually does
-    public Servo servo3; // figure out what this actually does
-    public Servo servo4; // figure out what this actually does
+    public Servo leftClaw; // figure out what this actually does
+    public Servo rightClaw; // figure out what this actually does
+    public Servo wristRoll; // figure out what this actually does
+    public Servo wristPitch; // figure out what this actually does
 
     public DcMotor flMotor;
     public DcMotor frMotor;
@@ -48,10 +48,10 @@ public class Devices {
         this.slides = hardwareMap.get(DcMotorEx.class, "Slides");
         this.wormGear = hardwareMap.get(DcMotorEx.class, "WormGear");
 
-        this.servo1 = hardwareMap.get(Servo.class, "Servo1");
-        this.servo2 = hardwareMap.get(Servo.class, "Servo2");
-        this.servo3 = hardwareMap.get(Servo.class, "Servo3");
-        this.servo4 = hardwareMap.get(Servo.class, "Servo4");
+        this.leftClaw = hardwareMap.get(Servo.class, "LeftClaw");
+        this.rightClaw = hardwareMap.get(Servo.class, "RightClaw");
+        this.wristRoll = hardwareMap.get(Servo.class, "WristRoll");
+        this.wristPitch = hardwareMap.get(Servo.class, "WristPitch");
 
         this.flMotor = hardwareMap.get(DcMotor.class, "FLMotor");
         this.frMotor = hardwareMap.get(DcMotor.class, "FRMotor");
@@ -62,9 +62,26 @@ public class Devices {
         imu.initialize(
              new IMU.Parameters(
                 new RevHubOrientationOnRobot(
-                        LogoFacingDirection.UP,
-                        UsbFacingDirection.RIGHT
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                 )
-        ))
+             )
+        );
+
+        // the following code causes an error if the motors aren't set to a position. oops!
+        //slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        flMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        blMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        brMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        wormGear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        flMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        blMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        brMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 }
