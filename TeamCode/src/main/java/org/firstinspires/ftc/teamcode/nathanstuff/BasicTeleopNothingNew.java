@@ -15,15 +15,15 @@ public class BasicTeleopNothingNew extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()) {
-            double rightStickX = gamepad1.right_stick_x;
-            double rightStickY = -gamepad1.right_stick_y;
             double leftStickX = gamepad1.left_stick_x;
+            double leftStickY = -gamepad1.left_stick_y;
+            double rightStickX = gamepad1.right_stick_x;
 
-            double denominator = Math.max(Math.abs(rightStickY) + Math.abs(rightStickX) + Math.abs(leftStickX), 1);
-            double flPower = (rightStickY + rightStickX + leftStickX) / denominator;
-            double frPower = (rightStickY - rightStickX + leftStickX) / denominator;
-            double blPower = (rightStickY - rightStickX - leftStickX) / denominator;
-            double brPower = (rightStickY + rightStickX - leftStickX) / denominator;
+            double denominator = Math.max(Math.abs(leftStickY) + Math.abs(leftStickX) + Math.abs(rightStickX), 1);
+            double flPower = (leftStickY + leftStickX + rightStickX) / denominator;
+            double blPower = (leftStickY - leftStickX + rightStickX) / denominator;
+            double frPower = (leftStickY - leftStickX - rightStickX) / denominator;
+            double brPower = (leftStickY + leftStickX - rightStickX) / denominator;
 
             devices.flMotor.setPower(flPower);
             devices.frMotor.setPower(frPower);
