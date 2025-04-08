@@ -20,6 +20,7 @@ package org.firstinspires.ftc.teamcode.nathanstuff;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -70,6 +71,8 @@ public class Devices {
 
         slides.setTargetPosition(0);
         wormGear.setTargetPosition(0);
+        slides.setPower(0);
+        slides.setPower(0);
         slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -84,5 +87,10 @@ public class Devices {
         frMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         blMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         brMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        flMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        blMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        slides.setDirection(DcMotorSimple.Direction.REVERSE);
+        wormGear.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 }
