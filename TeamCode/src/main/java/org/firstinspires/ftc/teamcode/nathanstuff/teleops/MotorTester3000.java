@@ -1,8 +1,10 @@
-package org.firstinspires.ftc.teamcode.nathanstuff;
+package org.firstinspires.ftc.teamcode.nathanstuff.teleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.nathanstuff.Devices;
 
 @TeleOp(name="Motor Tester 3000")
 public class MotorTester3000 extends LinearOpMode {

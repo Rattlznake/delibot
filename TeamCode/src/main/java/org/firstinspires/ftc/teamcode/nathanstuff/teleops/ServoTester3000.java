@@ -1,7 +1,9 @@
-package org.firstinspires.ftc.teamcode.nathanstuff;
+package org.firstinspires.ftc.teamcode.nathanstuff.teleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.nathanstuff.Devices;
 
 @TeleOp(name="Servo Tester 3000")
 public class ServoTester3000 extends LinearOpMode {

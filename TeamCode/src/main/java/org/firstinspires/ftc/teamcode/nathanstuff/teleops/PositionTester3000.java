@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.nathanstuff;
+package org.firstinspires.ftc.teamcode.nathanstuff.teleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.nathanstuff.Devices;
 
 @TeleOp(name="Position Tester 3000")
 public class PositionTester3000 extends LinearOpMode {
