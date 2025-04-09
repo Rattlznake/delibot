@@ -67,7 +67,7 @@ public class PositionTester3000 extends LinearOpMode {
             } else if (gamepad1.dpad_down) {
                 devices.slides.setPower(-dcMotorPower);
             } else {
-                devices.slides.setPower(0.001);
+                devices.slides.setPower(0);
             }
 
             devices.slides.setTargetPosition(devices.slides.getCurrentPosition());
