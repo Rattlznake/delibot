@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @TeleOp(name="Position Tester 3000")
 public class PositionTester3000 extends LinearOpMode {
 
@@ -65,10 +67,22 @@ public class PositionTester3000 extends LinearOpMode {
             } else if (gamepad1.dpad_down) {
                 devices.slides.setPower(-dcMotorPower);
             } else {
-                devices.slides.setPower(0);
+                devices.slides.setPower(0.001);
             }
 
-            // write telemetry code here
+            devices.slides.setTargetPosition(devices.slides.getCurrentPosition());
+
+            // dc motor telemetry
+            telemetry.addData("Slide extension: ",slidesPos);
+            telemetry.addData("Worm Gear Position: ",wormGearPos);
+
+            // servo telemetry
+            telemetry.addData("Wrist Pitch Servo Position: ",wristPitchPos);
+            telemetry.addData("Wrist Roll Servo Position: ",wristRollPos);
+            telemetry.addData("Right Claw Servo Pos: ",rightClawPos);
+            telemetry.addData("Left Claw Servo Pos: ",leftClawPos);
+
+            telemetry.update(); // post this data
         }
     }
 }
