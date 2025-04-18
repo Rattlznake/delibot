@@ -27,7 +27,7 @@ public class Arm {
         return;
     }
 
-    public void moveToPosition(int armExtension, int wormGearRotation) {
+    public void setArmPosition(int armExtension, int wormGearRotation) {
         this.setArmExtension(armExtension);
         this.setWormGearAngle(wormGearRotation);
     }
