@@ -4,16 +4,22 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.nathanstuff.Devices;
+import org.firstinspires.ftc.teamcode.nathanstuff.Arm;
+import org.firstinspires.ftc.teamcode.nathanstuff.Claw;
+import org.firstinspires.ftc.teamcode.nathanstuff.Drivetrain;
+import org.firstinspires.ftc.teamcode.nathanstuff.Peripherals;
 
 @TeleOp(name="BasicTeleOpNothingNew")
 public class BasicTeleopNothingNew extends LinearOpMode {
 
     public void runOpMode() {
-        Devices devices = new Devices(hardwareMap);
+        Arm arm = new Arm(hardwareMap);
+        Claw claw = new Claw(hardwareMap);
+        Drivetrain drivetrain = new Drivetrain(hardwareMap);
+        Peripherals peripherals = new Peripherals(hardwareMap);
 
-        devices.slides.setPower(0);
-        devices.wormGear.setPower(0);
+        arm.slides.setPower(0);
+        arm.wormGear.setPower(0);
 
         waitForStart();
 
@@ -23,10 +29,10 @@ public class BasicTeleopNothingNew extends LinearOpMode {
             double rightStickX = gamepad1.right_stick_x;
 
             if (gamepad1.left_stick_button) {
-                devices.imu.resetYaw();
+                peripherals.imu.resetYaw();
             }
 
-            double botYaw = devices.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+            double botYaw = peripherals.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
             double rotatedX = leftStickX * Math.cos(-botYaw) - leftStickY * Math.sin(-botYaw);
             double rotatedY = leftStickX * Math.sin(-botYaw) + leftStickY * Math.cos(-botYaw);
@@ -39,10 +45,10 @@ public class BasicTeleopNothingNew extends LinearOpMode {
             double frPower = (rotatedY - rotatedX - rightStickX) / denominator;
             double brPower = (rotatedY + rotatedX - rightStickX) / denominator;
 
-            devices.flMotor.setPower(flPower);
-            devices.frMotor.setPower(frPower);
-            devices.blMotor.setPower(blPower);
-            devices.brMotor.setPower(brPower);
+            drivetrain.flMotor.setPower(flPower);
+            drivetrain.frMotor.setPower(frPower);
+            drivetrain.blMotor.setPower(blPower);
+            drivetrain.brMotor.setPower(brPower);
         }
     }
 }
