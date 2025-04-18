@@ -1,45 +1,49 @@
 package org.firstinspires.ftc.teamcode.nathanstuff;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Arm {
-    private DcMotorEx slides;
-    private DcMotorEx wormGear;
+    public DcMotorEx slides;
+    public DcMotorEx wormGear;
 
-    private Servo leftClaw;
-    private Servo rightClaw;
-    private Servo wristRoll;
-    private Servo wristPitch;
-
-    public void setSlidesPosition(int extension, double power) {
-        slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slides.setPower(power);
+    public void setArmExtension(int extension) {
+        if (slides.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
         slides.setTargetPosition(extension);
         return;
     }
 
-    public void setSlidesPower(double power) {
-        slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slides.setPower(power);
-        return;
-    }
-
-    public void setWormGearPosition(int rotation, double power) {
-        wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wormGear.setPower(power);
+    public void setWormGearAngle(int rotation) {
+        if (wormGear.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
         wormGear.setTargetPosition(rotation);
         return;
     }
 
-    public void setWormGearPower(double power) {
-        wormGear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        wormGear.setPower(power);
-        return;
+    public void moveToPosition(int armExtension, int wormGearRotation) {
+        this.setArmExtension(armExtension);
+        this.setWormGearAngle(wormGearRotation);
     }
 
-    public void moveToPosition(ArmPosition desiredPosition) {
+    public Arm(HardwareMap hardwareMap) {
+        this.slides = hardwareMap.get(DcMotorEx.class, "Slides");
+        this.wormGear = hardwareMap.get(DcMotorEx.class, "WormGear");
 
+        slides.setTargetPosition(0);
+        wormGear.setTargetPosition(0);
+        slides.setPower(0);
+        slides.setPower(0);
+        slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        slides.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        wormGear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 }
