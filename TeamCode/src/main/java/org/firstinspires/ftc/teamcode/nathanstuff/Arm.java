@@ -29,6 +29,10 @@ public class Arm {
         this.setWormGearAngle(wormGearRotation);
     }
 
+    public void runToPosition(ArmPosition position) {
+        // TODO: Write code to run arm to a position
+    }
+
     public Arm(HardwareMap hardwareMap) {
         this.slides = hardwareMap.get(DcMotorEx.class, "Slides");
         this.wormGear = hardwareMap.get(DcMotorEx.class, "WormGear");
