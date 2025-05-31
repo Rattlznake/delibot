@@ -13,7 +13,6 @@ public class Arm {
             slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         slides.setTargetPosition(extension);
-        return;
     }
 
     public void setWormGearAngle(int rotation) {
@@ -21,7 +20,6 @@ public class Arm {
             wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         wormGear.setTargetPosition(rotation);
-        return;
     }
 
     public void setArmPosition(int armExtension, int wormGearRotation) {
@@ -29,8 +27,13 @@ public class Arm {
         this.setWormGearAngle(wormGearRotation);
     }
 
-    public void runToPosition(ArmPosition position) {
-        // TODO: Write code to run arm to a position
+    public void setArmPosition(ArmPosition position) {
+        if (position.useSlides) {
+            this.setArmExtension(position.slides);
+        }
+        if (position.useWormGear) {
+            this.setWormGearAngle(position.wormGear);
+        }
     }
 
     public Arm(HardwareMap hardwareMap) {
