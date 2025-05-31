@@ -18,7 +18,7 @@ public class Claw {
     }
 
     public void open() {
-        this.setPincherGap(10); // TODO: Change this value to represent appropriate "open" claw distance
+        this.setPincherGap(.50); // TODO: Change this value to represent appropriate "open" claw distance
     }
 
     public void close() {
@@ -38,8 +38,13 @@ public class Claw {
         setWristPitch(wristPitch);
     }
 
-    public void runToPosition(ClawPosition clawPosition) {
-        // TODO: Write code to run claw to a position
+    public void setClawPosition(ClawPosition position) {
+        if (position.useWristPitch) {
+            setWristPitch(position.wristPitch);
+        }
+        if (position.useWristRoll) {
+            setWristRoll(position.wristRoll);
+        }
     }
 
     public Claw(HardwareMap hardwareMap) {
