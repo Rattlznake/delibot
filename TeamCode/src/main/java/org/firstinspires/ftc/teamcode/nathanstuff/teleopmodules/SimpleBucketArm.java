@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.nathanstuff.teleopmodules;
 
 import org.firstinspires.ftc.teamcode.nathanstuff.Arm;
+import org.firstinspires.ftc.teamcode.nathanstuff.ArmPosition;
 import org.firstinspires.ftc.teamcode.nathanstuff.Claw;
 
 public class SimpleBucketArm {
@@ -18,8 +19,22 @@ public class SimpleBucketArm {
         this.claw = claw;
     }
 
+    private void moveArmAndClawForDistance(double distance) {
+        ArmPosition newPosition = new ArmPosition();
+        newPosition.setSlides(calculateSlidesExtensionForDistance(distance));
+        newPosition.setWormGear(calculateWormGearTicksForDistance(distance));
+
+        arm.setArmPosition(newPosition);
+
+        claw.setWristPitch(calculateServoPitchForDistance(distance));
+    }
+
     public void engage() {
-        // TODO: Write code to start grab process, reset distance value and move to starting position
+        distance = 0;
+
+        claw.open();
+
+        moveArmAndClawForDistance(distance);
     }
 
     private int calculateWormGearTicksForDistance(double distance) {
@@ -41,7 +56,9 @@ public class SimpleBucketArm {
     }
 
     public void setDistance(double newDistance) {
-        // TODO: Write code to set distance and update motor positions according to new position
+        distance = newDistance;
+
+        moveArmAndClawForDistance(distance);
     }
 
     public double getDistance() {
