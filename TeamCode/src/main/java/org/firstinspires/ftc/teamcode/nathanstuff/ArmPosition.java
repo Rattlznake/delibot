@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.nathanstuff;
 
 public class ArmPosition {
-    int wormGear;
-    boolean useWormGear;
-    int slides;
-    boolean useSlides;
+    public int wormGear;
+    public boolean useWormGear;
+    public int slides;
+    public boolean useSlides;
 
     // infinite parameters!!! don't use this.
     public ArmPosition(int wormGear, boolean useWormGear, int slides, boolean useSlides) {
@@ -19,6 +19,13 @@ public class ArmPosition {
         this.useWormGear = false;
         this.slides = 0;
         this.useSlides = false;
+    }
+
+    public ArmPosition(Arm arm) {
+        this.wormGear = arm.wormGear.getCurrentPosition();
+        this.useWormGear = true;
+        this.slides = arm.slides.getCurrentPosition();
+        this.useSlides = true;
     }
 
     // worm gear code
