@@ -1,22 +1,52 @@
 package org.firstinspires.ftc.teamcode.nathanstuff.teleopmodules;
 
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 import org.firstinspires.ftc.teamcode.nathanstuff.Arm;
 import org.firstinspires.ftc.teamcode.nathanstuff.ArmPosition;
 import org.firstinspires.ftc.teamcode.nathanstuff.Claw;
+import org.firstinspires.ftc.teamcode.nathanstuff.positions.BasicPositions;
 
 public class SimpleBucketArm {
+    private BasicPositions positions;
+
     private Arm arm;
     private Claw claw;
 
-    public double distance = 0;
-    public int[] distanceRange = {0, 100};
+    private double distance = 0;
+    private final double[] lowDistanceRange = {0,100};
+    private final double[] highDistanceRange = {50, 75};
+    public double[] distanceRange = lowDistanceRange;
 
-    public double wormGearHeight = 0; // TODO: Measure worm gear height
-    public double desiredClawHeight = 0; // TODO: Measure desired claw height for easy sample grab
+    public final double wormGearHeight = 0; // TODO: Measure worm gear height
+    public final double lowClawHeight = 0; // TODO: Measure desired claw height for easy sample grab
+    public final double highClawHeight = 0; // TODO: Measure desired claw height for easy sample drop
+    private double desiredClawHeight = lowClawHeight;
+
+
+    public GrabState state;
+
+    public enum GrabState {
+        UNENGAGED,
+        GRABBING,
+        TRANSITIONING,
+        DROPPING,
+    }
+
+    private ElapsedTime actionTimer;
+    private boolean grabExecutedBefore;
+    private boolean releaseExecutedBefore;
 
     public SimpleBucketArm(Arm arm, Claw claw) {
+        this.positions = new BasicPositions();
+        this.distanceRange = lowDistanceRange;
+        this.distance = distanceRange[0];
         this.arm = arm;
         this.claw = claw;
+        this.state = GrabState.UNENGAGED;
+        this.actionTimer = new ElapsedTime();
+        this.grabExecutedBefore = false;
+        this.releaseExecutedBefore = false;
     }
 
     private void moveArmAndClawForDistance(double distance) {
@@ -30,17 +60,28 @@ public class SimpleBucketArm {
     }
 
     public void engage() {
-        distance = 0;
+        this.distanceRange = lowDistanceRange;
+        distance = distanceRange[0];
+        grabExecutedBefore = false;
+        releaseExecutedBefore = false;
 
         claw.open();
 
         moveArmAndClawForDistance(distance);
+
+        state = GrabState.GRABBING;
     }
 
     private int calculateWormGearTicksForDistance(double distance) {
         int ticksPerRadian = 0; // TODO: Figure out the amount of DCMotor ticks per degree of rotation.
 
-        return (int) Math.atan(distance / (wormGearHeight-desiredClawHeight))*ticksPerRadian;
+        double radians = (int) Math.atan(distance / (wormGearHeight-desiredClawHeight));
+
+        if (radians < 0) {
+            radians += 180;
+        }
+
+        return (int) (radians*ticksPerRadian);
     }
 
     private int calculateSlidesExtensionForDistance(double distance) {
@@ -52,28 +93,86 @@ public class SimpleBucketArm {
     private double calculateServoPitchForDistance(double distance) {
         int servoTicksPerRadian = 0; // TODO: Figure out how many servo ticks it per degree of rotation.
 
-        return (Math.atan((wormGearHeight-desiredClawHeight) / distance) + Math.PI/2) * servoTicksPerRadian;
+        double radians = Math.atan((wormGearHeight - desiredClawHeight) / distance);
+
+        if (radians < 0) {
+            radians += 180;
+        }
+
+        if (state == GrabState.GRABBING) {
+            return (radians + Math.PI / 2) * servoTicksPerRadian;
+        } else /*if (state == GrabState.TRANSITIONING || state == GrabState.DROPPING)*/ {
+            return (radians) * servoTicksPerRadian;
+        }
     }
 
     public void setDistance(double newDistance) {
         distance = newDistance;
 
-        moveArmAndClawForDistance(distance);
+        if (distance < distanceRange[0]) {
+            distance = distanceRange[0];
+        }
+
+        if (distance > distanceRange[1]) {
+            distance = distanceRange[1];
+        }
+
+        if (state != GrabState.UNENGAGED && state != GrabState.TRANSITIONING) {
+            moveArmAndClawForDistance(distance);
+        }
     }
 
     public double getDistance() {
         return distance;
     }
 
-    public void grab() {
-        // TODO: Write code to close claw and switch to bucket position
+    public boolean grab() {
+        if (!grabExecutedBefore) {
+            actionTimer.reset();
+            grabExecutedBefore = true;
+        }
+
+        claw.close();
+        state = GrabState.TRANSITIONING;
+
+        if (actionTimer.seconds() < 0.1) {
+            return false;
+        }
+
+        distanceRange = lowDistanceRange;
+        distance = distanceRange[0];
+
+        moveArmAndClawForDistance(distance);
+
+        state = GrabState.DROPPING;
+
+        grabExecutedBefore = false;
+        return true;
     }
 
-    public void release() {
-        // TODO: Write code to drop sample and return to default position
+    public boolean release() {
+        if (!releaseExecutedBefore) {
+            actionTimer.reset();
+            releaseExecutedBefore = true;
+        }
+
+        claw.open();
+
+        if (actionTimer.seconds() < 0.1) {
+            return false;
+        }
+
+        disengage();
+
+        releaseExecutedBefore = false;
+        return true;
     }
 
     public void disengage() {
-        // TODO: Write code to cancel and return to default position
+        arm.setArmPosition(positions.armZeroPosition);
+        claw.setClawPosition(positions.clawZeroPosition);
+        claw.close();
+
+        state = GrabState.UNENGAGED;
     }
 }
