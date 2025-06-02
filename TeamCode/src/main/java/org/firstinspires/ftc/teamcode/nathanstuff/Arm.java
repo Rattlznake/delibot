@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Arm {
-    public DcMotorEx slides;
+    public DcMotorEx slides; // TODO: Enforce maximum and minimum slides distance?
     public DcMotorEx wormGear;
 
     public void setArmExtension(int extension) {
