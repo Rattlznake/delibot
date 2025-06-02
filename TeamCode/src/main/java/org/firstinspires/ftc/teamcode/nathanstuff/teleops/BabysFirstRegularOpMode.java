@@ -24,7 +24,7 @@ public class BabysFirstRegularOpMode extends OpMode {
 
         arm.setArmPosition(0,0);
         claw.setClawPosition(0,0);
-        claw.setPincherGap(0);
+        claw.close();
     }
 
     public void loop() {
