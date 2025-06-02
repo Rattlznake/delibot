@@ -6,7 +6,6 @@ public class ArmPosition {
     public int slides;
     public boolean useSlides;
 
-    // infinite parameters!!! don't use this.
     public ArmPosition(int wormGear, boolean useWormGear, int slides, boolean useSlides) {
         this.wormGear = wormGear;
         this.useWormGear = useWormGear;
