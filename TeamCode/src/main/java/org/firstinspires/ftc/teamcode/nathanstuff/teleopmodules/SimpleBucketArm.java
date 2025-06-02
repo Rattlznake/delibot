@@ -73,15 +73,15 @@ public class SimpleBucketArm {
     }
 
     private int calculateWormGearTicksForDistance(double distance) {
-        int ticksPerRadian = 0; // TODO: Figure out the amount of DCMotor ticks per degree of rotation.
+        double ticksPerDegree = 1.5; // TODO: Figure out the amount of DCMotor ticks per degree of rotation.
 
-        double radians = (int) Math.atan(distance / (wormGearHeight-desiredClawHeight));
+        double degrees = Math.toDegrees(Math.atan(distance / (wormGearHeight-desiredClawHeight)));
 
-        if (radians < 0) {
-            radians += 180;
+        if (degrees < 0) {
+            degrees += 180;
         }
 
-        return (int) (radians*ticksPerRadian);
+        return (int) (degrees*ticksPerDegree);
     }
 
     private int calculateSlidesExtensionForDistance(double distance) {
