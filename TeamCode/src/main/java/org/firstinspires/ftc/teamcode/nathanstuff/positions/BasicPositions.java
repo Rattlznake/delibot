@@ -13,7 +13,7 @@ public class BasicPositions {
         armZeroPosition.setWormGear(0);
         armZeroPosition.setSlides(0);
 
-        clawZeroPosition = new ClawPosition() // TODO: Fill this in with appropriate zero position
+        clawZeroPosition = new ClawPosition(); // TODO: Fill this in with appropriate zero position
         clawZeroPosition.setWristPitch(0);
         clawZeroPosition.setWristRoll(0);
     }
