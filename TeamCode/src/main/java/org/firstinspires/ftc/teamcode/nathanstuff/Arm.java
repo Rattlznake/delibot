@@ -9,17 +9,17 @@ public class Arm {
     public DcMotorEx wormGear;
 
     public void setArmExtension(int extension) {
+        slides.setTargetPosition(extension);
         if (slides.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        slides.setTargetPosition(extension);
     }
 
     public void setWormGearAngle(int rotation) {
+        wormGear.setTargetPosition(rotation);
         if (wormGear.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             wormGear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        wormGear.setTargetPosition(rotation);
     }
 
     public void setArmPosition(int armExtension, int wormGearRotation) {
