@@ -8,9 +8,9 @@ public class Claw {
     public Servo rightClaw;
     public Servo wristRollServo;
     public Servo wristPitchServo;
-    // TODO: Fill these in with appropriate values
-    public final double leftClawClosed = 0;
-    public final double rightClawClosed = 0;
+    public boolean clawClosed = false;
+    public double leftClawClosed = 0.40;
+    public double rightClawClosed = 0.40;
 
     public void setPincherGap(double pincherGap) {
         leftClaw.setPosition(leftClawClosed+pincherGap);
@@ -18,11 +18,26 @@ public class Claw {
     }
 
     public void open() {
-        this.setPincherGap(.50); // TODO: Change this value to represent appropriate "open" claw distance
+        this.leftClaw.setPosition(0.625);
+        this.rightClaw.setPosition(0.335);
+
+        this.clawClosed = false;
     }
 
     public void close() {
-        this.setPincherGap(0); // TODO: Change this value to represent appropriate "closed" claw distance
+        this.leftClaw.setPosition(0.49);
+        this.rightClaw.setPosition(0.49);
+
+        this.clawClosed = true;
+    }
+
+    public void toggle() {
+        if (this.clawClosed) {
+            this.open();
+        } else {
+            this.close();
+        }
+
     }
 
     public void setWristRoll(double wristRoll) { // wrapper for setPosition for wristRollServo
@@ -52,5 +67,7 @@ public class Claw {
         this.rightClaw = hardwareMap.get(Servo.class, "RightClaw");
         this.wristRollServo = hardwareMap.get(Servo.class, "WristRoll");
         this.wristPitchServo = hardwareMap.get(Servo.class, "WristPitch");
+
+        this.close();
     }
 }
