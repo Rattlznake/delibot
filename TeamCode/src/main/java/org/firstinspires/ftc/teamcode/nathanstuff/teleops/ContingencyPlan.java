@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.nathanstuff.teleops;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.nathanstuff.Arm;
 import org.firstinspires.ftc.teamcode.nathanstuff.Claw;
@@ -45,10 +46,12 @@ public class ContingencyPlan extends OpMode {
         driverController = new SmartController(gamepad1);
         manipulatorController = new SmartController(gamepad2);
 
-        arm.slides.setPower(0.5);
+        arm.slides.setPower(1);
         arm.slides.setTargetPosition(0);
 
-        claw.setWristRoll(0);
+        arm.wormGear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        claw.setWristRoll(0.95);
     }
 
     public void loop() {
@@ -94,15 +97,18 @@ public class ContingencyPlan extends OpMode {
         claw.setWristRoll(rollNew);*/
 
         // slides
-        int slidesMaxExtension = 1000; // TODO: Figure out max slides extension in ticks
+        int slidesMaxExtension = 2094;
 
-        int newSlidesPosition = (int) (slidesMaxExtension * controller.right_trigger.currentValue());
+        int newSlidesPosition = (int) -(slidesMaxExtension * controller.right_trigger.currentValue());
         arm.setArmExtension(newSlidesPosition);
 
-        // worm gear
-        double wormGearPower = 0.5;
+        telemetry.addData("Right Trigger Value:",controller.right_trigger.currentValue());
+        telemetry.addData("Desired Slides Position:",newSlidesPosition);
 
-        arm.wormGear.setPower(wormGearPower * controller.left_stick.currentX());
+        // worm gear
+        double wormGearPower = 0.8;
+
+        arm.wormGear.setPower(wormGearPower * -controller.left_stick.currentY());
         arm.wormGear.setTargetPosition(arm.wormGear.getCurrentPosition());
     }
 }
