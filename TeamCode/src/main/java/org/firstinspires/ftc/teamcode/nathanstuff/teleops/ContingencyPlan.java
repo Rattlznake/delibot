@@ -93,8 +93,14 @@ public class ContingencyPlan extends OpMode {
         double pitchNew = claw.wristPitchServo.getPosition() + (wristPower * controller.right_stick.currentY());
         claw.setWristPitch(pitchNew);
 
-        /*double rollNew = claw.wristRollServo.getPosition() + (wristPower * controller.right_stick.currentX());
-        claw.setWristRoll(rollNew);*/
+        double rollNew = claw.wristRollServo.getPosition() + (wristPower * controller.right_stick.currentX());
+        claw.setWristRoll(rollNew);
+
+        telemetry.addData("pitch servo: ",claw.wristPitchServo.getPosition());
+        telemetry.addData("roll servo: ",claw.wristRollServo.getPosition());
+
+        telemetry.addData("stick x: ",controller.right_stick.pureCurrentX());
+        telemetry.addData("stick y: ",controller.right_stick.pureCurrentY());
 
         // slides
         int slidesMaxExtension = 2094;
@@ -110,5 +116,10 @@ public class ContingencyPlan extends OpMode {
 
         arm.wormGear.setPower(wormGearPower * -controller.left_stick.currentY());
         arm.wormGear.setTargetPosition(arm.wormGear.getCurrentPosition());
+
+        // claw controls
+        if (controller.a.justPressed() || controller.right_bumper.justPressed()) {
+            claw.toggle();
+        }
     }
 }
